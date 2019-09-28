@@ -21,9 +21,9 @@ This file is for installing OSPOS on any hosting account using cPanel as a contr
 
 **How to use ?**
 
-1- Simply download Get-POS to your SSH using wget command.
-2- Chmod +x Get-POS
-3- Answer the required DB questions.
+1- Simply download Get-POS to your SSH using wget command. <br>
+2- Chmod +x Get-POS <br>
+3- Answer the required DB questions. <br>
 
 You're ready to enjoy OSPOS!
 
