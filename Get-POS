@@ -87,7 +87,7 @@ echo "**************************************************"
 echo ""
 echo "Welcome To OSPOS, OpenSourcePOS Installer"
 echo ""
-curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.2.3/opensourcepos.20180613210031.3.2.3.f1cf3d.zip" -o OSPOS.zip
+curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.3.0/opensourcepos.20190929181753.3.3.0.0b9a76.zip" -o OSPOS.zip
 echo ""
 unzip -qq OSPOS.zip -d OSPOS & progress_bar "sleep 4" "Extracting Files"
 echo ""
