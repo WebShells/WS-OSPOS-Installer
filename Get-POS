@@ -138,7 +138,7 @@ echo "\$query_builder = TRUE;" >> $HOME/OSPOS/application/config/database.php
 
 echo "\$db['default'] = array(" >> $HOME/OSPOS/application/config/database.php
 echo "  'dsn'   => ''," >> $HOME/OSPOS/application/config/database.php
-echo "  'hostname' => '$hostname'," >> $HOME/OSPOS/application/config/database.php
+echo "  'hostname' => 'localhost'," >> $HOME/OSPOS/application/config/database.php
 echo "  'username' => '$(whoami)_$usernames'," >> $HOME/OSPOS/application/config/database.php
 echo "  'password' => '$passwd'," >> $HOME/OSPOS/application/config/database.php
 echo "  'database' => '$(whoami)_$dbname'," >> $HOME/OSPOS/application/config/database.php
@@ -186,9 +186,11 @@ echo ""
 echo "31 SQL Tables Created"
 echo ""
 fi
-echo
+echo "Removing Installation Files"
 cp -R $HOME/OSPOS $HOME/public_html/OSPOS/
 rm -rf $HOME/OSPOS
+rm -rf WS-OSPOS-Installer*
+
 echo "Loading ======================> 100 % "
 echo ""
 echo "**************************************************"
@@ -212,7 +214,7 @@ echo
 echo "**************************************************"
 echo
 echo "Enjoy Our Retail Solution OSPOS"
-echo "   http://ospos.wshells.org"
+echo "   https://ospos.wshells.org"
 echo
 exit 0
 fi
