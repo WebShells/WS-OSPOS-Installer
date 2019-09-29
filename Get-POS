@@ -87,7 +87,7 @@ echo "**************************************************"
 echo ""
 echo "Welcome To OSPOS, OpenSourcePOS Installer"
 echo ""
-curl -L "https://bintray.com/jekkos/opensourcepos/download_file?file_path=opensourcepos.20190704173621.master.7da7c0.zip" -o OSPOS.zip
+curl -L "https://dl.bintray.com/jekkos/opensourcepos/opensourcepos.20190929123701.master.17b8cf.zip" -o OSPOS.zip
 echo ""
 unzip -qq OSPOS.zip -d OSPOS & progress_bar "sleep 4" "Extracting Files"
 echo ""
