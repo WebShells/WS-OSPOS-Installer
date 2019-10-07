@@ -74,7 +74,29 @@ spinner() {
 
 if [ "$1" = "" ];
 then echo ""
+echo "What would you like us to help you with ?"
+echo "#########################################"
+echo "Please input number of your choice, ex: 2 For Local Deployment"
+echo ""
+while true
+do
+select choice in "Web Server Configuration & Setup" "Local Deployment" "Display System Info" "Exit"
+do
+case $choice in
+"Web Server Configuration & Setup")
+echo "This isn't ready yet! Please check it back later..."
+break
+;;
+"Local Deployment")
+select sub_choice in "FreeBSD Ubuntu CentOS" "Raspberry PI" "cPanel/Online" "Back to Main Menu"
+do
+case $sub_choice in 
+"FreeBSD Ubuntu CentOS")
+echo "Preparing Ubuntu/CentOS Installation!"
+echo ""
 echo "Cleaning current directory from previous files!"
+rm -rf ~/public_html/OSPOSBK
+mv ~/public_html/OSPOS ~/public_html/OSPOSBK
 rm -rf OSPOS
 echo ""
 rm -rf OSPOS.zip & spinner "Removing Files..."
@@ -165,7 +187,178 @@ echo "Available under $HOME/OSPOS/application/config/ as database.php"
 echo ""
 echo "**************************************************"
 echo ""
-echo -n ">> Do You Want To Import OSPOS Retail POS Default DB (Y/N)?"
+echo -n ">> Do You Want To Create & Import OSPOS Default DB (Y/N)?"
+echo
+read answer
+  if test "$answer" != "Y" -a "$answer" != "y";
+  then exit 0;
+  else
+echo ""
+echo ">>Enter User Password:"
+read -s rootpwd 
+echo ""
+mysql -u root -p$rootpwd --execute="CREATE SCHEMA $(whoami)_$dbname;" 2> /tmp/error1
+STATUS=$? 
+if [ $STATUS -eq 0 ];
+then 
+    echo -e "MySQL Database & User Created Successfully!"
+elif (grep -i "^ERROR 1007" /tmp/error1 > /dev/null);
+then
+    echo -e "MySQL Database '$(whoami)_$dbname' already exists"
+	echo -e "Please repeat the above process using dbname different from '$(whoami)_$dbname'"
+	exit
+else
+    echo -e "Failed to Create Database '$(whoami)_$dbname'"
+	echo -e "Please check your credentials"
+	exit
+fi
+mysql -u root -p$rootpwd --execute="CREATE USER '$(whoami)_$usernames'@'%' IDENTIFIED BY '$passwd';" 2> /tmp/error1 
+mysql -u root -p$rootpwd --execute="GRANT ALL PRIVILEGES ON $(whoami)_$dbname . * TO '$(whoami)_$usernames'@'%' IDENTIFIED BY '$passwd' WITH GRANT OPTION;" 2> /tmp/error1 
+mysql -u root -p$rootpwd --execute="FLUSH PRIVILEGES;" 2> /tmp/error1 
+rm -r /tmp/error1 
+echo ""
+echo "Importing Default DB Values..."
+mysql -hlocalhost -u $(whoami)_$usernames -p$passwd $(whoami)_$dbname < $HOME/OSPOS/database/database.sql &>/dev/null & spinner
+echo ""
+echo ""
+#echo "$count"
+echo "31 SQL Tables Created"
+echo ""
+fi
+ 
+echo "Removing Installation Files"
+cp -R $HOME/OSPOS $HOME/public_html/OSPOS/
+rm -rf $HOME/OSPOS
+rm -rf WS-OSPOS-Installer*
+
+echo "Loading ======================> 100 % "
+echo ""
+echo "**************************************************"
+echo ""
+echo "If You filled in the needed, The Installation Of"
+echo "OSPOS Should Be Running Now On:"
+echo ""
+echo "https://$hostname/OSPOS/public"
+echo ""
+echo "Use below credentials in order to login to our POS"
+echo ""
+echo "Username: admin"
+echo "Password: pointofsale"
+echo ""
+echo "Please keep the DB credentials safe!"
+echo ""
+echo "Database: $(whoami)_$dbname"
+echo "Username: $(whoami)_$usernames"
+echo "Password: $passwd"
+echo
+echo "**************************************************"
+echo
+echo "Enjoy Our Retail Solution OSPOS"
+echo "   https://ospos.wshells.org"
+echo
+break
+;;
+"Raspberry PI")
+echo "This isn't ready yet! Please check it back later..."
+break
+;;
+"cPanel/Online")
+echo "Preparing FreeBSD/cPanel Installation!"
+echo ""
+echo "Cleaning current directory from previous files!"
+rm -rf ~/public_html/OSPOSBK
+mv ~/public_html/OSPOS ~/public_html/OSPOSBK
+rm -rf OSPOS
+echo ""
+rm -rf OSPOS.zip & spinner "Removing Files..."
+echo ""
+echo "OSPOS Retail POS ( OSPOS ) Setup will now start in $HOME Directory..."
+echo ""
+echo "Loading ====> 20 % "
+echo ""
+echo "**************************************************"
+echo ""
+echo "Welcome To OSPOS, OpenSourcePOS Installer"
+echo ""
+curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.3.0/opensourcepos.20190929181753.3.3.0.0b9a76.zip" -o OSPOS.zip
+echo ""
+unzip -qq OSPOS.zip -d OSPOS & progress_bar "sleep 4" "Extracting Files"
+echo ""
+rm -rf OSPOS.zip & spinner "Removing Zip Files..."
+echo ""
+echo "Copying files & installing scripts"
+echo ""
+echo "Loading =======> 44 % "
+echo ""
+echo "**************************************************"
+echo ""
+echo "OSPOS Retail POS Has Been Successfully Installed In Your Home Dir Under $HOME/OSPOS"
+echo ""
+echo "If You Like Our Automated System Can Generate The DB Files For You"
+echo
+echo -n ">> Shall We Help You Create The DB Files (Y/N)?"
+echo
+cd
+read answer
+  if test "$answer" != "Y" -a "$answer" != "y";
+  then exit 0;
+  else
+echo
+echo "Please fill in the needed configuration for MySQL connection"
+echo ""
+echo ">> MySQL DataBase Name?"
+  read dbname
+echo
+echo ">> MySQL DataBase Username?"
+  read usernames
+echo
+echo ">> MySQL User Password?"
+  read passwd
+echo
+echo ">> What's Your Hostname?"
+  read hostname
+echo
+echo "Creating Database Files Now..."
+echo ""
+echo "Loading ==============> 60 % "
+echo ""
+mv OSPOS/application/config/database.php OSPOS/application/config/database.php.bk
+touch OSPOS/application/config/database.php
+echo "<?php" >> $HOME/OSPOS/application/config/database.php
+echo "defined('BASEPATH') OR exit('No direct script access allowed');" >> $HOME/OSPOS/application/config/database.php
+echo "\$active_group = 'default';" >> $HOME/OSPOS/application/config/database.php
+echo "\$query_builder = TRUE;" >> $HOME/OSPOS/application/config/database.php
+
+echo "\$db['default'] = array(" >> $HOME/OSPOS/application/config/database.php
+echo "  'dsn'   => ''," >> $HOME/OSPOS/application/config/database.php
+echo "  'hostname' => 'localhost'," >> $HOME/OSPOS/application/config/database.php
+echo "  'username' => '$(whoami)_$usernames'," >> $HOME/OSPOS/application/config/database.php
+echo "  'password' => '$passwd'," >> $HOME/OSPOS/application/config/database.php
+echo "  'database' => '$(whoami)_$dbname'," >> $HOME/OSPOS/application/config/database.php
+echo "  'dbdriver' => 'mysqli'," >> $HOME/OSPOS/application/config/database.php
+echo "  'dbprefix' => 'ospos_'," >> $HOME/OSPOS/application/config/database.php
+echo "  'pconnect' => FALSE," >> $HOME/OSPOS/application/config/database.php
+echo "  'db_debug' => (ENVIRONMENT !== 'production')," >> $HOME/OSPOS/application/config/database.php
+echo "  'cache_on' => FALSE," >> $HOME/OSPOS/application/config/database.php
+echo "  'cachedir' => ''," >> $HOME/OSPOS/application/config/database.php
+echo "  'char_set' => 'utf8'," >> $HOME/OSPOS/application/config/database.php
+echo "  'dbcollat' => 'utf8_general_ci'," >> $HOME/OSPOS/application/config/database.php
+echo "  'swap_pre' => ''," >> $HOME/OSPOS/application/config/database.php
+echo "  'encrypt' => FALSE," >> $HOME/OSPOS/application/config/database.php
+echo "  'compress' => FALSE," >> $HOME/OSPOS/application/config/database.php
+echo "  'stricton' => FALSE," >> $HOME/OSPOS/application/config/database.php
+echo "  'failover' => array()," >> $HOME/OSPOS/application/config/database.php
+echo "  'save_queries' => TRUE" >> $HOME/OSPOS/application/config/database.php
+echo ");" >> $HOME/OSPOS/application/config/database.php
+fi
+echo "**************************************************"
+echo ""
+echo "Database Config Files Created Successfully!"
+echo "Available under $HOME/OSPOS/application/config/ as database.php"
+echo ""
+echo "**************************************************"
+echo ""
+echo -n ">> Do You Want To Create & Import OSPOS Default DB (Y/N)?"
 echo
 read answer
   if test "$answer" != "Y" -a "$answer" != "y";
@@ -180,9 +373,7 @@ echo ""
 /usr/bin/uapi  Mysql create_user name=$(whoami)_$usernames password=$passwd > /dev/null 2>&1
 /usr/bin/uapi  Mysql set_privileges_on_database user=$(whoami)_$usernames database=$(whoami)_$dbname privileges=ALL%20PRIVILEGES > /dev/null 2>&1
 mysql -hlocalhost -u $(whoami)_$usernames -p$passwd $(whoami)_$dbname < $HOME/OSPOS/database/database.sql &>/dev/null & spinner
-#count=$(mysql -hlocalhost -u $(whoami)_$usernames -p$passwd $(whoami)_$dbname -e "$(whoami)_$dbname;")
 echo ""
-#echo "$count"
 echo "31 SQL Tables Created"
 echo ""
 fi
@@ -216,6 +407,58 @@ echo
 echo "Enjoy Our Retail Solution OSPOS"
 echo "   https://ospos.wshells.org"
 echo
+break
+;;
+"Back to Main Menu")
+echo "Back to Main Menu..."
+break 2
+;;
+*)
+echo "Invalid Entry, stop messing around monkey."
+break 2
+;;
+esac
+done
+break
+;;
+"WindowsXP")
+echo "Windows XP doesn't support shell installation idiot!" & echo "Exiting now..."
+break
+;;
+"Display System Info")
+echo "System Info"
+echo "#########################################"
+echo ""
+lsb_release -a
+echo ""
+echo ">>Apache:"
+echo "" 
+httpd -v
+echo ""
+echo ">>PHP Version:"
+echo ""
+php -v
+echo ""
+echo ">>DB Version:"
+echo ""
+mysqld --version
+echo ""
+echo "#########################################"
+echo ""
+break
+;;
+"Exit")
+echo "Exiting Now..."
+exit 0
+break
+;;
+*)
+echo "Invalid entry, stop messing around monkey."
+break
+;;
+esac
+done
+done
 exit 0
 fi
 -
