@@ -429,7 +429,7 @@ break
 echo "System Info"
 echo "#########################################"
 echo ""
-lsb_release -a
+uname -a
 echo ""
 echo ">>Apache:"
 echo "" 
@@ -463,7 +463,7 @@ exit 0
 fi
 -
 # 
-#                         · All rights reserved © 2010 - 2019 ·
+#                         · All rights reserved © 2010 - 2023 ·
 # [WebShells Services](https://www.wshells.ws) & [Open Source Point of Sale](https://opensourcepos.org)
 #
 # This Script was created for OSPOS ( OpensourcePOS ) project exclusively. 
