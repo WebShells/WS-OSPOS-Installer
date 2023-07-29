@@ -109,7 +109,7 @@ echo "**************************************************"
 echo ""
 echo "Welcome To OSPOS, OpenSourcePOS Installer"
 echo ""
-curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.3.1/opensourcepos.20191214181241.3.3.1.c786d4.zip" -o OSPOS.zip
+curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.3.8/opensourcepos.3.3.8.ffe492.zip" -o OSPOS.zip
 echo ""
 unzip -qq OSPOS.zip -d OSPOS & progress_bar "sleep 4" "Extracting Files"
 echo ""
@@ -254,7 +254,7 @@ echo
 echo "**************************************************"
 echo
 echo "Enjoy Our Retail Solution OSPOS"
-echo "   https://ospos.wshells.org"
+echo "   https://ospos.wshells.net"
 echo
 break
 ;;
@@ -280,7 +280,7 @@ echo "**************************************************"
 echo ""
 echo "Welcome To OSPOS, OpenSourcePOS Installer"
 echo ""
-curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.3.1/opensourcepos.20191214181241.3.3.1.c786d4.zip" -o OSPOS.zip
+curl -L "https://github.com/opensourcepos/opensourcepos/releases/download/3.3.8/opensourcepos.3.3.8.ffe492.zip" -o OSPOS.zip
 echo ""
 unzip -qq OSPOS.zip -d OSPOS & progress_bar "sleep 4" "Extracting Files"
 echo ""
@@ -405,7 +405,7 @@ echo
 echo "**************************************************"
 echo
 echo "Enjoy Our Retail Solution OSPOS"
-echo "   https://ospos.wshells.org"
+echo "   https://ospos.wshells.net"
 echo
 break
 ;;
