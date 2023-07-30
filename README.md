@@ -3,6 +3,8 @@ WebShells &amp; OSPOS ( Open Source Point of Sale ) Auto Stand-Alone Installer
 
 This file is for installing OSPOS on any hosting account using cPanel as a control panel with Shell Access.
 
+## Please make sure you run it in $HOME directory.
+
 . Cleans up Installation directory ( from previous installations )
 
 . Downloads latest released project files
@@ -21,9 +23,13 @@ This file is for installing OSPOS on any hosting account using cPanel as a contr
 
 **How to use ?**
 
-1- Simply download Get-POS to your SSH using wget command. <br>
-2- Chmod +x Get-POS <br>
-3- Answer the required DB questions. <br>
+1- Download Get-POS using ```wget``` or ```git clone https://github.com/WebShells/WS-OSPOS-Installer.git``` <br>
+2- ```cd WS-OSPOS-Installer``` <br>
+3- ```mv Get-POS ..``` <br>
+4- ```cd ..``` <br>
+5- ```chmod +x Get-POS``` <br>
+6- ```/Get-POS```<br>
+7- Answer the required DB questions. <br>
 
 You're ready to enjoy OSPOS!
 
