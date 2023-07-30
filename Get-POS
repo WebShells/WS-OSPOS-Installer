@@ -220,9 +220,9 @@ else
 	echo -e "Please check your credentials"
 	exit
 fi
-mysql -u root -p$rootpwd --execute="CREATE USER '$(whoami)_$usernames'@'%' IDENTIFIED BY '$passwd';" 2> /tmp/error1 
-mysql -u root -p$rootpwd --execute="GRANT ALL PRIVILEGES ON $(whoami)_$dbname . * TO '$(whoami)_$usernames'@'%' IDENTIFIED BY '$passwd' WITH GRANT OPTION;" 2> /tmp/error1 
-mysql -u root -p$rootpwd --execute="FLUSH PRIVILEGES;" 2> /tmp/error1 
+mysql -u $(whoami) -p$rootpwd --execute="CREATE USER '$(whoami)_$usernames'@'%' IDENTIFIED BY '$passwd';" 2> /tmp/error1 
+mysql -u $(whoami) -p$rootpwd --execute="GRANT ALL PRIVILEGES ON $(whoami)_$dbname . * TO '$(whoami)_$usernames'@'%' IDENTIFIED BY '$passwd' WITH GRANT OPTION;" 2> /tmp/error1 
+mysql -u $(whoami) -p$rootpwd --execute="FLUSH PRIVILEGES;" 2> /tmp/error1 
 rm -r /tmp/error1 
 echo ""
 echo "Importing Default DB Values..."
@@ -230,7 +230,7 @@ mysql -hlocalhost -u $(whoami)_$usernames -p$passwd $(whoami)_$dbname < $HOME/OS
 echo ""
 echo ""
 #echo "$count"
-echo "31 SQL Tables Created"
+echo "47 SQL Tables Created"
 echo ""
 fi
  
@@ -377,9 +377,9 @@ echo "MySQL Database & User Created Successfully!"
 echo ""
 echo "Importing Default DB Values..."
 echo ""
-/usr/bin/uapi  Mysql create_database name=$(whoami)_$dbname > /dev/null 2>&1
-/usr/bin/uapi  Mysql create_user name=$(whoami)_$usernames password=$passwd > /dev/null 2>&1
-/usr/bin/uapi  Mysql set_privileges_on_database user=$(whoami)_$usernames database=$(whoami)_$dbname privileges=ALL%20PRIVILEGES > /dev/null 2>&1
+mysql -u $(whoami) -p$rootpwd --execute="CREATE USER '$(whoami)_$usernames'@'localhost' IDENTIFIED BY '$passwd';" 2> /tmp/error1
+mysql -u $(whoami) -p$rootpwd --execute="GRANT ALL PRIVILEGES ON $(whoami)_$dbname.* TO '$(whoami)_$usernames'@'localhost' IDENTIFIED BY '$passwd' WITH GRANT OPTION;" 2> /tmp/error1
+mysql -u $(whoami) -p$rootpwd --execute="FLUSH PRIVILEGES;" 2> /tmp/error1
 mysql -hlocalhost -u $(whoami)_$usernames -p$passwd $(whoami)_$dbname < $HOME/OSPOS/database/database.sql &>/dev/null & spinner
 echo ""
 echo "47 SQL Tables Created"
