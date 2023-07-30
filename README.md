@@ -28,7 +28,7 @@ This file is for installing OSPOS on any hosting account using cPanel as a contr
 3- ```mv Get-POS ..``` <br>
 4- ```cd ..``` <br>
 5- ```chmod +x Get-POS``` <br>
-6- ```/Get-POS```<br>
+6- ```./Get-POS```<br>
 7- Answer the required DB questions. <br>
 
 You're ready to enjoy OSPOS!
