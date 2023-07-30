@@ -1,6 +1,8 @@
 #!/bin/sh
 clear
 echo "Starting OSPOS Installation Process"
+echo "THIS INSTALLATION SHOULD BE RUNNING ON BASE DIRECTORY"
+echo "AT $HOME, OUTSIDE PUBLIC_HTML"
 echo ""
 echo "###########################################################################"
 echo "#  __      __      ___.     _________.__           .__  .__               #"
@@ -13,19 +15,25 @@ echo "#                         WS - OS POS Auto Installer                      
 echo "###########################################################################"
 
 progress () {
-    local s=0.25
-    local f=0.25
-    local TXT="${1}"
-    local fmt="${2}"
-    local str="########################"
-
-    while true; do
-        for i in {1..14}; do
-            sleep $f
-            s=$(echo ${s} + ${f} | bc)
-            printf "\r${fmt}[%-13s%s" "${TXT#*]}" "${str:0:$i}" "] Estimated Time: ${s}s" | tee ${tmpfile}
-        done
-    done
+	add() {
+	  echo "$(( $1 + $2 ))"
+	}
+	
+	# Configuration
+	f=1
+	s=0
+	str="[##########]"
+	fmt="%-25s"
+	TXT="Extracting..."
+	tmpfile="/tmp/get_pos_tmpfile"
+	
+	while true; do
+	  for i in {1..14}; do
+	    sleep "$f"
+	    s=$(add "$s" "$f")
+	    printf "\r${fmt}[%-13s%s" "${TXT#*]}" "${str:0:$i}" "] Estimated Time: ${s}s" | tee "$tmpfile"
+	  done
+	done
 }
 
 progress_bar() {
@@ -374,7 +382,7 @@ echo ""
 /usr/bin/uapi  Mysql set_privileges_on_database user=$(whoami)_$usernames database=$(whoami)_$dbname privileges=ALL%20PRIVILEGES > /dev/null 2>&1
 mysql -hlocalhost -u $(whoami)_$usernames -p$passwd $(whoami)_$dbname < $HOME/OSPOS/database/database.sql &>/dev/null & spinner
 echo ""
-echo "31 SQL Tables Created"
+echo "47 SQL Tables Created"
 echo ""
 fi
 echo "Removing Installation Files"
@@ -433,7 +441,7 @@ uname -a
 echo ""
 echo ">>Apache:"
 echo "" 
-httpd -v
+#httpd -v
 echo ""
 echo ">>PHP Version:"
 echo ""
@@ -441,7 +449,7 @@ php -v
 echo ""
 echo ">>DB Version:"
 echo ""
-mysqld --version
+#mysqld --version
 echo ""
 echo "#########################################"
 echo ""
