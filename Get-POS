@@ -202,10 +202,11 @@ read answer
   then exit 0;
   else
 echo ""
-echo ">>Enter User Password:"
+echo ">>Enter SQL privileged password for user:"
+echo $(whoami)
 read -s rootpwd 
 echo ""
-mysql -u root -p$rootpwd --execute="CREATE SCHEMA $(whoami)_$dbname;" 2> /tmp/error1
+mysql -u $(whoami) -p$rootpwd --execute="CREATE SCHEMA $(whoami)_$dbname;" 2> /tmp/error1
 STATUS=$? 
 if [ $STATUS -eq 0 ];
 then 
