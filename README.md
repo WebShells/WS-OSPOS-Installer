@@ -1,3 +1,5 @@
+<p align="center"><img src="WebShells.png" alt="WebShells Logo" width="auto" height="150"></p>
+
 # WS-OSPOS-Installer
 WebShells &amp; OSPOS ( Open Source Point of Sale ) Auto Stand-Alone Installer
 
