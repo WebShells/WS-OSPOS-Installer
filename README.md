@@ -3,7 +3,7 @@
 # WS-OSPOS-Installer
 WebShells &amp; OSPOS ( Open Source Point of Sale ) Auto Stand-Alone Installer
 
-This file is for installing OSPOS on any hosting account using cPanel as a control panel with Shell Access.
+This file is for installing OSPOS on hosting accounts or virtual servers using cPanel or Webmin with shell access over SSH.
 
 ## Changelog
 
@@ -11,6 +11,7 @@ This file is for installing OSPOS on any hosting account using cPanel as a contr
 - Replaced the fragile progress/spinner flow with a simpler install path that is easier to run on current systems.
 - Added command checks and safer database-name sanitizing.
 - Fixed the cPanel database path handling and removed misleading DB output when database setup is skipped.
+- Documented Webmin and virtual-server SSH usage alongside cPanel installs.
 - Published the installer modernization as commit `71464a40780f2de447dce6b726b6360afec48a7f`.
 
 ## Please make sure you run it in $HOME directory.
@@ -40,6 +41,8 @@ This file is for installing OSPOS on any hosting account using cPanel as a contr
 5- ```chmod +x Get-POS``` <br>
 6- ```./Get-POS```<br>
 7- Answer the required DB questions. <br>
+
+This installer is intended for cPanel or Webmin-managed hosts, including VPS setups where you connect over SSH.
 
 You're ready to enjoy OSPOS!
 
