@@ -5,6 +5,14 @@ WebShells &amp; OSPOS ( Open Source Point of Sale ) Auto Stand-Alone Installer
 
 This file is for installing OSPOS on any hosting account using cPanel as a control panel with Shell Access.
 
+## Changelog
+
+- Updated `Get-POS` to run under Bash instead of relying on `#!/bin/sh` with Bash-only features.
+- Replaced the fragile progress/spinner flow with a simpler install path that is easier to run on current systems.
+- Added command checks and safer database-name sanitizing.
+- Fixed the cPanel database path handling and removed misleading DB output when database setup is skipped.
+- Published the installer modernization as commit `71464a40780f2de447dce6b726b6360afec48a7f`.
+
 ## Please make sure you run it in $HOME directory.
 
 . Cleans up Installation directory ( from previous installations )
