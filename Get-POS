@@ -322,7 +322,7 @@ local_deployment_menu() {
         log "#########################################"
         log "1) FreeBSD Ubuntu CentOS"
         log "2) Raspberry PI"
-        log "3) cPanel/Online"
+        log "3) cPanel / Webmin / Online"
         log "4) Back to Main Menu"
         read -r -p "Choice [1-4]: " choice
 
@@ -338,7 +338,7 @@ local_deployment_menu() {
                 ;;
             3)
                 log ""
-                log "Preparing FreeBSD/cPanel installation"
+                log "Preparing FreeBSD/cPanel/Webmin installation"
                 run_install cpanel
                 return
                 ;;
